@@ -105,6 +105,7 @@ const Home = () => {
                 },
               ].map((el, i) => (
                 <a
+                  key={i}
                   className="mb-2 mr-2 rounded-md border bg-white px-2 py-1 text-sm shadow-sm transition-all hover:border-gray-400 hover:shadow-md"
                   href={el.link}
                   target="_blank"
