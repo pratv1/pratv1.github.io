@@ -20,8 +20,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${inter.variable} ${firaCode.variable} font-sans`}>
-        <main className="relative bg-gray-50">
-          <div className="pointer-events-none absolute left-1/2 top-0 z-0 flex h-full w-[1280px] -translate-x-1/2 justify-center">
+        <main className="relative overflow-hidden">
+          <div className="pointer-events-none absolute left-1/2 top-0 z-10 flex h-20 w-[1280px] -translate-x-1/2 justify-center">
             <div className="absolute h-full w-[1280px] border-x border-dashed">
               <span className="p-1 font-mono text-xs opacity-50">1280px</span>
               <span className="absolute right-0 p-1 font-mono text-xs opacity-50">
@@ -46,12 +46,13 @@ export default function RootLayout({ children }) {
                 640px
               </span>
             </div>
-            {/* <div className="absolute h-full w-[360px] border-x border-dashed">
+            <div className="absolute h-full w-[360px] border-x border-dashed">
               <span className="p-1 font-mono text-xs opacity-50">360px</span>
               <span className="absolute right-0 p-1 font-mono text-xs opacity-50">
                 360px
               </span>
-            </div> */}
+            </div>
+            <div className="absolute h-full w-full bg-gradient-to-b from-transparent from-50% to-slate-50" />
           </div>
           {children}
         </main>
