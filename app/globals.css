@@ -5,13 +5,3 @@
 * {
   letter-spacing: -0.025em;
 }
-
-::-moz-selection {
-  color: white;
-  background: #111111;
-}
-
-::selection {
-  color: white;
-  background: #111111;
-}
