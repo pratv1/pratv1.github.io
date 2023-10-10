@@ -1,3 +1,3 @@
 ## Personal portfolio website
 
-Deployed at: [npc-prat.github.io](https://npc-prat.github.io/)
+Deployed at: [pratv1.github.io](https://pratv1.github.io/)
