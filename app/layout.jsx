@@ -1,5 +1,8 @@
+import { cn } from "@/utils";
 import { Fira_Code, Inter } from "next/font/google";
+import Link from "next/link";
 import "./globals.css";
+import { ExternalLink, Github, Home } from "lucide-react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -13,54 +16,66 @@ const firaCode = Fira_Code({
 
 export const metadata = {
   title: "Pratik V | Front-End Developer",
-  description: "I am a front end developer based in India.",
+  description: "I am a front-end developer based in India.",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${firaCode.variable} bg-zinc-900 font-sans text-white`}
+        className={`${inter.variable} ${firaCode.variable} bg-zinc-950 font-sans text-white`}
       >
-        <main className="relative overflow-hidden">
-          <div className="pointer-events-none absolute left-1/2 top-0 z-10 hidden h-20 w-[1280px] -translate-x-1/2 justify-center text-white opacity-20 sm:flex">
-            <div className="absolute h-full w-[1280px] border-x border-dashed border-white">
-              <span className="p-1 font-mono text-xs">1280px</span>
-              <span className="absolute right-0 p-1 font-mono text-xs">
-                1280px
-              </span>
+        <header className="sticky top-0 z-50 bg-zinc-950/50 backdrop-blur-md">
+          <div className="container flex items-center justify-between py-3">
+            <Link
+              href="/"
+              title="Home"
+              className="text-gray-300 transition-all hover:text-white"
+            >
+              <Home size={20} />
+            </Link>
+            <div className="flex w-full items-center justify-end space-x-2">
+              {[
+                { title: "About", href: "/#about" },
+                { title: "Projects", href: "/#projects" },
+                { title: "Contact", href: "/#contact" },
+                { title: "Blog", href: "/blog" },
+              ].map((el, i) => (
+                <Link
+                  key={i}
+                  href={el.href}
+                  className={cn(
+                    "rounded-full border border-zinc-800 px-3 py-1.5 text-sm text-gray-300 transition-all hover:border-zinc-700 hover:bg-zinc-900 hover:text-white",
+                  )}
+                >
+                  {el.title}
+                </Link>
+              ))}
+              <Link
+                href="https://github.com/pratv1/pratv1.github.io"
+                target="_blank"
+                className="pl-1 text-gray-300 transition-all hover:text-white"
+                title="View source on GitHub"
+              >
+                <Github size={20} />
+              </Link>
             </div>
-            <div className="absolute h-full w-[1024px] border-x border-dashed border-white">
-              <span className="p-1 font-mono text-xs">1024px</span>
-              <span className="absolute right-0 p-1 font-mono text-xs">
-                1024px
-              </span>
-            </div>
-            <div className="absolute h-full w-[768px] border-x border-dashed border-white">
-              <span className="p-1 font-mono text-xs">768px</span>
-              <span className="absolute right-0 p-1 font-mono text-xs">
-                768px
-              </span>
-            </div>
-            <div className="absolute h-full w-[640px] border-x border-dashed border-white">
-              <span className="p-1 font-mono text-xs">640px</span>
-              <span className="absolute right-0 p-1 font-mono text-xs">
-                640px
-              </span>
-            </div>
-            <div className="absolute h-full w-[360px] border-x border-dashed border-white lg:hidden">
-              <span className="p-1 font-mono text-xs">360px</span>
-              <span className="absolute right-0 p-1 font-mono text-xs">
-                360px
-              </span>
-            </div>
-            <div className="absolute h-full w-full bg-gradient-to-b from-transparent from-50% to-zinc-950" />
           </div>
-          {children}
-        </main>
-        <footer className="bg-zinc-950 shadow-inner">
-          <div className="container py-6 text-center font-medium text-slate-300">
-            Designed and coded by... <i>*drumroll*</i> ... me!
+          <hr className="border-zinc-900" />
+        </header>
+        <main className>{children}</main>
+        <footer className="bg-black text-sm">
+          <div className="container flex items-center justify-center py-6 text-center text-gray-400">
+            <span>Designed and coded by Pratik</span>
+            <span className="mx-2">•</span>
+            <a
+              className="flex items-center space-x-1.5 transition-all hover:text-gray-200"
+              href="https://github.com/pratv1/pratv1.github.io"
+              target="_blank"
+            >
+              <span>View source on GitHub</span>
+              <ExternalLink size={12} />
+            </a>
           </div>
         </footer>
       </body>
