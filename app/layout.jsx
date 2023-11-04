@@ -15,7 +15,7 @@ const firaCode = Fira_Code({
 });
 
 export const metadata = {
-  title: "Pratik V | Front-End Developer",
+  title: "Pratik V | Front-end Developer",
   description: "I am a front-end developer based in India.",
 };
 
@@ -34,7 +34,7 @@ export default function RootLayout({ children }) {
             >
               <Home size={20} />
             </Link>
-            <div className="flex w-full items-center justify-end space-x-2">
+            <div className="flex w-full items-center justify-end">
               {[
                 { title: "About", href: "/#about" },
                 { title: "Projects", href: "/#projects" },
@@ -45,7 +45,8 @@ export default function RootLayout({ children }) {
                   key={i}
                   href={el.href}
                   className={cn(
-                    "rounded-full border border-zinc-800 px-3 py-1.5 text-sm text-gray-300 transition-all hover:border-zinc-700 hover:bg-zinc-900 hover:text-white",
+                    "rounded-full border border-transparent px-3.5 py-1.5 text-sm text-gray-300 transition-all hover:bg-zinc-900 hover:text-white active:bg-zinc-800",
+                    el.title !== "Blog" && "hidden sm:block",
                   )}
                 >
                   {el.title}
@@ -54,7 +55,7 @@ export default function RootLayout({ children }) {
               <Link
                 href="https://github.com/pratv1/pratv1.github.io"
                 target="_blank"
-                className="pl-1 text-gray-300 transition-all hover:text-white"
+                className="ml-3.5 text-gray-300 transition-all hover:text-white"
                 title="View source on GitHub"
               >
                 <Github size={20} />
@@ -63,13 +64,13 @@ export default function RootLayout({ children }) {
           </div>
           <hr className="border-zinc-900" />
         </header>
-        <main className>{children}</main>
+        <main>{children}</main>
         <footer className="bg-black text-sm">
-          <div className="container flex items-center justify-center py-6 text-center text-gray-400">
+          <div className="container flex flex-col items-center justify-center py-6 text-center text-gray-400 md:flex-row">
             <span>Designed and coded by Pratik</span>
-            <span className="mx-2">•</span>
+            <span className="mx-2 text-gray-800">•</span>
             <a
-              className="flex items-center space-x-1.5 transition-all hover:text-gray-200"
+              className="flex items-center space-x-1.5 transition-all hover:text-gray-300 hover:underline"
               href="https://github.com/pratv1/pratv1.github.io"
               target="_blank"
             >
