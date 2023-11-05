@@ -13,6 +13,7 @@ import {
   Linkedin,
   Mail,
 } from "lucide-react";
+import Image from "next/image";
 
 const Home = () => {
   return (
@@ -95,7 +96,7 @@ const Home = () => {
           </div>
         </div>
         <button
-          className="absolute bottom-0 left-1/2 z-20 flex -translate-x-1/2 translate-y-1/2 cursor-pointer items-center rounded-full border-2 border-white bg-white px-4 py-2 text-sm font-semibold text-black shadow-xl transition-all hover:bg-zinc-950 hover:text-white"
+          className="absolute bottom-0 left-1/2 z-20 flex -translate-x-1/2 translate-y-1/2 cursor-pointer items-center rounded-full border-2 border-white bg-white px-3 py-1.5 text-sm font-semibold text-black shadow-xl transition-all hover:bg-zinc-950 hover:text-white lg:px-4 lg:py-2"
           href="/#about"
           onClick={() => {
             window.scrollTo({
@@ -109,8 +110,18 @@ const Home = () => {
         </button>
       </section>
 
-      <section id="about" className="border-t border-zinc-900 pt-4">
-        <div className="container py-20">
+      <section
+        id="about"
+        className="border-t border-zinc-900 pt-4"
+        style={{
+          background: [
+            "radial-gradient(at top left, rgba(30, 58, 138, 0.15), transparent 45%)",
+            "radial-gradient(at center right, rgba(49, 46, 129, 0.15), transparent 45%)",
+            "radial-gradient(at bottom left, rgba(6, 78, 59, 0.15), transparent 45%)",
+          ].join(", "),
+        }}
+      >
+        <div className="container py-14 lg:py-20">
           <div className="mb-4 text-xs font-semibold uppercase tracking-wider text-blue-300">
             About Me
           </div>
@@ -191,7 +202,7 @@ const Home = () => {
                     ].map((el, i) => (
                       <a
                         key={i}
-                        className="mb-2 mr-2 flex items-center space-x-2 rounded-full border border-zinc-900 px-3 py-1.5 text-sm text-slate-200 transition-all hover:border-zinc-800 hover:bg-zinc-900 hover:text-white active:bg-zinc-800"
+                        className="mb-2 mr-2 flex items-center space-x-2 rounded-full border border-indigo-950 px-3 py-1.5 text-sm text-indigo-50 transition-all hover:border-indigo-900 hover:bg-indigo-950 hover:text-white active:bg-indigo-900"
                         href={el.link}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -312,43 +323,145 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="border-t border-zinc-900">
-        <div className="container py-20">
+      <section
+        className="border-t border-zinc-900"
+        style={{
+          background: [
+            "radial-gradient(at top left, rgba(120, 53, 15, 0.15), transparent 45%)",
+          ].join(", "),
+        }}
+      >
+        <div className="container py-14 lg:py-20">
           <div className="mb-4 text-xs font-semibold uppercase tracking-wider text-amber-300">
             Skills
           </div>
           <h3 className="mb-6 text-2xl font-bold sm:text-3xl lg:mb-10">
             Technologies I've Worked With
           </h3>
-          <div>
-            <span className="font-mono">{"< In Progress >"}</span>
-          </div>
+          {[
+            {
+              category: "Languages",
+              items: ["HTML", "CSS", "JavaScript", "TypeScript", "PHP", "Bash"],
+            },
+            {
+              category: "Frameworks & Libraries",
+              items: [
+                "React",
+                "Next.js",
+                "Tailwind CSS",
+                "MUI",
+                "Vue",
+                "Laravel",
+                "Google Maps API",
+                "Socket.IO",
+              ],
+            },
+            {
+              category: "Tools & Platforms",
+              items: [
+                "Git",
+                "Linux",
+                "VS Code",
+                "Figma",
+                "Adobe XD",
+                "Vercel",
+                "Cloudflare",
+                "Google Cloud",
+                "Firebase",
+                "Jenkins",
+                "Amazon Web Services: S3, CloudFront, Route 53",
+              ],
+            },
+            {
+              category: "Other",
+              items: [
+                "Responsive Web Design",
+                "Progressive Web Apps",
+                "Web Accessibility",
+                "SEO",
+              ],
+            },
+          ].map((el, i) => (
+            <div key={i} className="mt-4 first:mt-0">
+              <div className="text-sm font-semibold">{el.category}</div>
+              <div className="mt-2.5 flex flex-wrap items-center">
+                {el.items.map((item, i) => (
+                  <div
+                    key={i}
+                    className="mb-2 mr-2 cursor-default rounded-full border border-amber-950/60 bg-amber-950/10 px-3 py-1.5 text-sm text-amber-50 transition-all hover:border-amber-800 hover:bg-amber-950 hover:text-white"
+                  >
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
-      <section id="projects" className="border-t border-zinc-900">
-        <div className="container py-20">
+      <section
+        id="projects"
+        className="border-t border-zinc-900"
+        style={{
+          background: [
+            "radial-gradient(at top left, rgba(6, 78, 59, 0.15), transparent 45%)",
+          ].join(", "),
+        }}
+      >
+        <div className="container py-14 lg:py-20">
           <div className="mb-4 text-xs font-semibold uppercase tracking-wider text-emerald-300">
             Projects
           </div>
           <h3 className="mb-6 text-2xl font-bold sm:text-3xl lg:mb-10">
             Some of My Work
           </h3>
-          <div>
-            <span className="font-mono">{"< In Progress >"}</span>
+          <div className="flex items-stretch">
+            <div className="group w-full max-w-xs overflow-hidden rounded-xl border border-zinc-900">
+              <div className="relative overflow-hidden">
+                <img
+                  src="/images/pages/home/fcc-projects-thumbnail.png"
+                  alt="freeCodeCamp Projects"
+                  className="relative w-full transition-all duration-300 group-hover:scale-105"
+                />
+                <div className="pointer-events-none absolute bottom-0 h-full w-full bg-gradient-to-t from-zinc-950 to-transparent to-50%" />
+              </div>
+              <div className="p-4 pb-6">
+                <a
+                  className="flex w-fit items-center space-x-2 font-semibold hover:underline lg:text-lg"
+                  href="https://pratv1.github.io/fCC-projects"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span>freeCodeCamp Projects</span>
+                  <ExternalLink className="h-3 w-3 lg:h-4 lg:w-4" />
+                </a>
+                <div className="mt-3 text-sm !leading-relaxed">
+                  A collection of projects I built for the freeCodeCamp
+                  certifications.
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section id="contact" className="border-t border-zinc-900">
-        <div className="container py-20">
+      <section
+        id="contact"
+        className="border-t border-zinc-900"
+        style={{
+          background: [
+            "radial-gradient(at top left, rgba(22, 78, 99, 0.15), transparent 45%)",
+          ].join(", "),
+        }}
+      >
+        <div className="container py-14 lg:py-20">
           <div className="mb-4 text-xs font-semibold uppercase tracking-wider text-cyan-300">
             Contact
           </div>
           <h3 className="mb-6 text-2xl font-bold sm:text-3xl lg:mb-10">
             Get in Touch
           </h3>
-          <div className="flex flex-col space-y-2.5">
+          <div className="flex">
             {[
               {
                 icon: <Linkedin size={20} />,
@@ -373,7 +486,7 @@ const Home = () => {
             ].map((el, i) => (
               <a
                 key={i}
-                className="flex w-fit items-center space-x-3 rounded-full border border-zinc-900 px-3 py-2 transition-all hover:border-zinc-800 hover:bg-zinc-900 active:bg-zinc-800"
+                className="mb-2 mr-2 flex w-fit items-center space-x-2.5 rounded-full border border-zinc-900 px-3 py-2 transition-all hover:border-zinc-800 hover:bg-zinc-900 active:bg-zinc-800"
                 href={el.link}
                 target="_blank"
                 rel="noopener noreferrer"
