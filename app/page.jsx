@@ -13,7 +13,6 @@ import {
   Linkedin,
   Mail,
 } from "lucide-react";
-import Image from "next/image";
 
 const Home = () => {
   return (
@@ -115,9 +114,9 @@ const Home = () => {
         className="border-t border-zinc-900 pt-4"
         style={{
           background: [
-            "radial-gradient(at top left, rgba(30, 58, 138, 0.15), transparent 45%)",
-            "radial-gradient(at center right, rgba(49, 46, 129, 0.15), transparent 45%)",
-            "radial-gradient(at bottom left, rgba(6, 78, 59, 0.15), transparent 45%)",
+            "radial-gradient(at top left, rgba(30, 58, 138, 0.15), transparent 50%)",
+            "radial-gradient(at center right, rgba(49, 46, 129, 0.15), transparent 50%)",
+            "radial-gradient(at bottom left, rgba(6, 78, 59, 0.15), transparent 50%)",
           ].join(", "),
         }}
       >
@@ -327,7 +326,7 @@ const Home = () => {
         className="border-t border-zinc-900"
         style={{
           background: [
-            "radial-gradient(at top left, rgba(120, 53, 15, 0.15), transparent 45%)",
+            "radial-gradient(at top left, rgba(120, 53, 15, 0.15), transparent 50%)",
           ].join(", "),
         }}
       >
@@ -369,7 +368,7 @@ const Home = () => {
                 "Google Cloud",
                 "Firebase",
                 "Jenkins",
-                "Amazon Web Services: S3, CloudFront, Route 53",
+                "Amazon Web Services: S3, CloudFront, Route 53, EC2",
               ],
             },
             {
@@ -404,7 +403,7 @@ const Home = () => {
         className="border-t border-zinc-900"
         style={{
           background: [
-            "radial-gradient(at top left, rgba(6, 78, 59, 0.15), transparent 45%)",
+            "radial-gradient(at top left, rgba(6, 78, 59, 0.15), transparent 50%)",
           ].join(", "),
         }}
       >
@@ -450,7 +449,7 @@ const Home = () => {
         className="border-t border-zinc-900"
         style={{
           background: [
-            "radial-gradient(at top left, rgba(22, 78, 99, 0.15), transparent 45%)",
+            "radial-gradient(at top left, rgba(22, 78, 99, 0.15), transparent 50%)",
           ].join(", "),
         }}
       >
@@ -461,7 +460,10 @@ const Home = () => {
           <h3 className="mb-6 text-2xl font-bold sm:text-3xl lg:mb-10">
             Get in Touch
           </h3>
-          <div className="flex">
+          <p className="mb-6 text-sm !leading-relaxed lg:text-base">
+            Feel free to contact me through any of the following channels:
+          </p>
+          <div className="flex flex-wrap">
             {[
               {
                 icon: <Linkedin size={20} />,

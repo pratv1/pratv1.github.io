@@ -22,6 +22,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <meta name="darkreader-lock" />
       <body
         className={`${inter.variable} ${firaCode.variable} bg-zinc-950 font-sans text-white`}
       >
