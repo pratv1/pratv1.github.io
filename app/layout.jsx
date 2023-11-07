@@ -31,9 +31,10 @@ export default function RootLayout({ children }) {
             <Link
               href="/"
               title="Home"
-              className="text-gray-300 transition-all hover:text-white"
+              className="flex items-center space-x-3 whitespace-nowrap text-gray-300 transition-all hover:text-white"
             >
               <Home size={20} />
+              <span className="hidden font-bold sm:inline-block">Pratik V</span>
             </Link>
             <div className="flex w-full items-center justify-end">
               {[
@@ -46,7 +47,7 @@ export default function RootLayout({ children }) {
                   key={i}
                   href={el.href}
                   className={cn(
-                    "rounded-full border border-transparent px-3.5 py-1.5 text-sm text-gray-300 transition-all hover:bg-zinc-900 hover:text-white active:bg-zinc-800",
+                    "rounded-full border border-transparent px-3.5 py-1.5 text-sm font-semibold text-gray-300 transition-all hover:bg-zinc-900 hover:text-white active:bg-zinc-800",
                     el.title !== "Blog" && "hidden sm:block",
                   )}
                 >
@@ -69,7 +70,7 @@ export default function RootLayout({ children }) {
         <footer className="bg-black text-sm">
           <div className="container flex flex-col items-center justify-center py-6 text-center text-gray-400 md:flex-row">
             <span>Designed and coded by Pratik</span>
-            <span className="mx-2 text-gray-800">•</span>
+            <span className="mx-2 opacity-60">•</span>
             <a
               className="flex items-center space-x-1.5 transition-all hover:text-gray-300 hover:underline"
               href="https://github.com/pratv1/pratv1.github.io"

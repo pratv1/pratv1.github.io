@@ -13,6 +13,7 @@ import {
   Linkedin,
   Mail,
 } from "lucide-react";
+import Link from "next/link";
 
 const Home = () => {
   return (
@@ -114,14 +115,14 @@ const Home = () => {
         className="border-t border-zinc-900 pt-4"
         style={{
           background: [
-            "radial-gradient(at top left, rgba(30, 58, 138, 0.15), transparent 50%)",
+            "radial-gradient(at top left, rgba(76, 29, 149, 0.15), transparent 50%)",
             "radial-gradient(at center right, rgba(49, 46, 129, 0.15), transparent 50%)",
             "radial-gradient(at bottom left, rgba(6, 78, 59, 0.15), transparent 50%)",
           ].join(", "),
         }}
       >
         <div className="container py-14 lg:py-20">
-          <div className="mb-4 text-xs font-semibold uppercase tracking-wider text-blue-300">
+          <div className="mb-4 text-xs font-semibold uppercase tracking-wider text-violet-300">
             About Me
           </div>
           <h3 className="mb-6 text-2xl font-bold sm:text-3xl lg:mb-10">
@@ -140,7 +141,7 @@ const Home = () => {
               },
               timePeriod: "Apr 2015 – Apr 2019",
               title: "Alwar Public School, Rajasthan",
-              subtitle: "Secondary School (CBSE India)",
+              subtitle: "Secondary school (CBSE India)",
               content: (
                 <p>
                   I was first introduced to HTML in 2016 when I was in 10th
@@ -161,7 +162,7 @@ const Home = () => {
               },
               timePeriod: "Mar 2018 – Oct 2020",
               title: "freeCodeCamp.org",
-              subtitle: "Web Development Courses",
+              subtitle: "Web development courses",
               content: (
                 <>
                   <p className="mb-4">
@@ -235,7 +236,7 @@ const Home = () => {
               },
               timePeriod: "Nov 2020 – Present",
               title: "Bolt.Earth, Bengaluru (Remote)",
-              subtitle: "Front-end Developer",
+              subtitle: "Front-end developer",
               content: (
                 <>
                   <p className="leading-relaxed">
@@ -243,7 +244,7 @@ const Home = () => {
                     hired as a full-time employee. My main responsibilities
                     include:
                   </p>
-                  <ul className="mt-2 list-inside list-disc">
+                  <ul className="mt-1 list-inside list-disc">
                     {[
                       <>
                         Building the Bolt.Earth{" "}
@@ -270,9 +271,7 @@ const Home = () => {
                       "Working with the design and backend teams to plan and implement new features.",
                       "Reviewing code and providing feedback to other developers.",
                     ].map((el, i) => (
-                      <li key={i} className="mb-1">
-                        {el}
-                      </li>
+                      <li key={i}>{el}</li>
                     ))}
                   </ul>
                 </>
@@ -309,11 +308,9 @@ const Home = () => {
                 <div className="mb-6 flex flex-col space-y-1 lg:flex-row lg:items-stretch lg:space-x-2 lg:space-y-0 lg:text-lg">
                   <b className="font-bold">{el.title}</b>
                   <span className="hidden border-l border-slate-600 lg:inline-block" />
-                  <span className="font-light text-slate-300">
-                    {el.subtitle}
-                  </span>
+                  <span className="text-slate-300">{el.subtitle}</span>
                 </div>
-                <div className="text-sm !leading-[1.8em] text-white lg:text-base">
+                <div className="text-sm !leading-[1.8em] text-white">
                   {el.content}
                 </div>
               </div>
@@ -337,61 +334,78 @@ const Home = () => {
           <h3 className="mb-6 text-2xl font-bold sm:text-3xl lg:mb-10">
             Technologies I've Worked With
           </h3>
+          <div className="flex flex-wrap text-sm">
+            <div className="mr-3 flex items-center space-x-1.5">
+              <div className="h-3 w-3 rounded-full bg-green-500" />
+              <span className="text-green-200">Proficient</span>
+            </div>
+            <div className="mr-3 flex items-center space-x-1.5">
+              <div className="h-3 w-3 rounded-full bg-blue-500" />
+              <span className="text-blue-200">Experienced</span>
+            </div>
+            <div className="mr-3 flex items-center space-x-1.5">
+              <div className="h-3 w-3 rounded-full bg-yellow-500" />
+              <span className="text-yellow-200">Familiar</span>
+            </div>
+          </div>
           {[
             {
               category: "Languages",
-              items: ["HTML", "CSS", "JavaScript", "TypeScript", "PHP", "Bash"],
+              items: {
+                proficient: ["HTML", "CSS", "JavaScript"],
+                experienced: ["TypeScript", "Bash"],
+                familiar: ["PHP", "Python", "C++"],
+              },
             },
             {
               category: "Frameworks & Libraries",
-              items: [
-                "React",
-                "Next.js",
-                "Tailwind CSS",
-                "MUI",
-                "Vue",
-                "Laravel",
-                "Google Maps API",
-                "Socket.IO",
-              ],
+              items: {
+                proficient: ["React", "Tailwind CSS", "MUI"],
+                experienced: ["Next.js", "Google Maps API"],
+                familiar: ["Vue", "Laravel", "Socket.IO"],
+              },
             },
             {
               category: "Tools & Platforms",
-              items: [
-                "Git",
-                "Linux",
-                "VS Code",
-                "Figma",
-                "Adobe XD",
-                "Vercel",
-                "Cloudflare",
-                "Google Cloud",
-                "Firebase",
-                "Jenkins",
-                "Amazon Web Services: S3, CloudFront, Route 53, EC2",
-              ],
+              items: {
+                proficient: [
+                  "Amazon Web Services: S3, CloudFront, Route 53, EC2",
+                  "VS Code",
+                ],
+                experienced: ["Git", "Linux", "Cloudflare", "Figma"],
+                familiar: ["Firebase", "Adobe XD", "Jenkins"],
+              },
             },
             {
               category: "Other",
-              items: [
-                "Responsive Web Design",
-                "Progressive Web Apps",
-                "Web Accessibility",
-                "SEO",
-              ],
+              items: {
+                proficient: ["Responsive Web Design", "SEO"],
+                experienced: ["Progressive Web Apps", "Web Accessibility"],
+                familiar: [],
+              },
             },
           ].map((el, i) => (
-            <div key={i} className="mt-4 first:mt-0">
-              <div className="text-sm font-semibold">{el.category}</div>
-              <div className="mt-2.5 flex flex-wrap items-center">
-                {el.items.map((item, i) => (
-                  <div
-                    key={i}
-                    className="mb-2 mr-2 cursor-default rounded-full border border-amber-950/60 bg-amber-950/10 px-3 py-1.5 text-sm text-amber-50 transition-all hover:border-amber-800 hover:bg-amber-950 hover:text-white"
-                  >
-                    <span>{item}</span>
-                  </div>
-                ))}
+            <div key={i} className={cn("mt-6", i === 0 && "lg:mt-8")}>
+              <div className="font-semibold">{el.category}</div>
+              <div className="mt-4 flex flex-wrap items-center text-sm">
+                {Object.entries(el.items).map(([proficiency, list]) =>
+                  list.map((item, i) => (
+                    <div
+                      key={i}
+                      className={cn(
+                        "mb-2 mr-2 cursor-default rounded-full border px-3 py-1.5 transition-all",
+                        proficiency === "proficient" &&
+                          "border-green-500/50 bg-green-950/40 hover:border-green-500 hover:bg-green-900",
+                        proficiency === "experienced" &&
+                          "border-blue-500/60 bg-blue-950/40 hover:border-blue-500 hover:bg-blue-900",
+                        proficiency === "familiar" &&
+                          "border-yellow-500/50 bg-yellow-950/40 hover:border-yellow-500 hover:bg-yellow-900",
+                      )}
+                    >
+                      <span>{item}</span>
+                    </div>
+                  )),
+                )}
               </div>
             </div>
           ))}
@@ -414,32 +428,109 @@ const Home = () => {
           <h3 className="mb-6 text-2xl font-bold sm:text-3xl lg:mb-10">
             Some of My Work
           </h3>
-          <div className="flex items-stretch">
-            <div className="group w-full max-w-xs overflow-hidden rounded-xl border border-zinc-900">
-              <div className="relative overflow-hidden">
-                <img
-                  src="/images/pages/home/fcc-projects-thumbnail.png"
-                  alt="freeCodeCamp Projects"
-                  className="relative w-full transition-all duration-300 group-hover:scale-105"
-                />
-                <div className="pointer-events-none absolute bottom-0 h-full w-full bg-gradient-to-t from-zinc-950 to-transparent to-50%" />
-              </div>
-              <div className="p-4 pb-6">
-                <a
-                  className="flex w-fit items-center space-x-2 font-semibold hover:underline lg:text-lg"
-                  href="https://pratv1.github.io/fCC-projects"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span>freeCodeCamp Projects</span>
-                  <ExternalLink className="h-3 w-3 lg:h-4 lg:w-4" />
-                </a>
-                <div className="mt-3 text-sm !leading-relaxed">
-                  A collection of projects I built for the freeCodeCamp
-                  certifications.
+          <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:gap-8">
+            {[
+              {
+                title: "Bolt.Earth Website",
+                link: "https://bolt.earth",
+                thumbnail:
+                  "/images/pages/home/bolt-earth-website-thumbnail.png",
+                description:
+                  "Built with Next.js and Tailwind CSS. Designed by the Bolt.Earth design team.",
+              },
+              {
+                title: "freeCodeCamp Projects",
+                link: "https://pratv1.github.io/fCC-projects",
+                thumbnail: "/images/pages/home/fcc-projects-thumbnail.png",
+                description:
+                  "A collection of projects I built for the freeCodeCamp certifications.",
+              },
+            ].map((el, i) => (
+              <div
+                key={i}
+                className="group h-full w-full overflow-hidden rounded-xl border border-zinc-900 bg-zinc-950"
+              >
+                <div className="relative h-60 overflow-hidden">
+                  <img
+                    src={el.thumbnail}
+                    alt={el.title}
+                    className="relative h-full w-full object-cover transition-all duration-300 group-hover:scale-105"
+                  />
+                  <div className="pointer-events-none absolute bottom-0 h-full w-full bg-gradient-to-t from-zinc-950 to-transparent to-50%" />
+                </div>
+                <div className="p-4 pb-8">
+                  <a
+                    className="flex w-fit items-center space-x-2 font-semibold hover:underline lg:text-lg"
+                    href={el.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span>{el.title}</span>
+                    <ExternalLink className="h-3 w-3 lg:h-4 lg:w-4" />
+                  </a>
+                  <div className="mt-4 text-sm !leading-relaxed text-slate-300">
+                    {el.description}
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="recent-blog-posts"
+        className="border-t border-zinc-900"
+        style={{
+          background: [
+            "radial-gradient(at top left, rgba(30, 58, 138, 0.15), transparent 50%)",
+          ].join(", "),
+        }}
+      >
+        <div className="container py-14 lg:py-20">
+          <div className="mb-4 text-xs font-semibold uppercase tracking-wider text-blue-300">
+            Blog
+          </div>
+          <h3 className="mb-6 text-2xl font-bold sm:text-3xl lg:mb-10">
+            My Recent Blog Posts
+          </h3>
+          <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:gap-8">
+            {[
+              {
+                title:
+                  "Full-page scroll animation with Framer Motion, React, and Tailwind CSS",
+                link: "/blog/full-page-scroll-animation-with-framer-motion-react-and-tailwind-css",
+                thumbnail:
+                  "/images/pages/home/bolt-earth-website-thumbnail.png",
+                description:
+                  "Technical breakdown of Bolt.Earth's landing page animation.",
+              },
+            ].map((el, i) => (
+              <div
+                key={i}
+                className="group h-full w-full overflow-hidden rounded-xl border border-zinc-900 bg-zinc-950"
+              >
+                <div className="relative h-60 overflow-hidden">
+                  <img
+                    src={el.thumbnail}
+                    alt={el.title}
+                    className="relative h-full w-full object-cover transition-all duration-300 group-hover:scale-105"
+                  />
+                  <div className="pointer-events-none absolute bottom-0 h-full w-full bg-gradient-to-t from-zinc-950 to-transparent to-50%" />
+                </div>
+                <div className="p-4 pb-8">
+                  <Link
+                    className="font-semibold hover:underline lg:text-lg"
+                    href={el.link}
+                  >
+                    {el.title}
+                  </Link>
+                  <div className="mt-4 text-sm !leading-relaxed text-slate-300">
+                    {el.description}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -460,7 +551,7 @@ const Home = () => {
           <h3 className="mb-6 text-2xl font-bold sm:text-3xl lg:mb-10">
             Get in Touch
           </h3>
-          <p className="mb-6 text-sm !leading-relaxed lg:text-base">
+          <p className="mb-6 text-sm !leading-relaxed lg:mb-8 lg:text-base">
             Feel free to contact me through any of the following channels:
           </p>
           <div className="flex flex-wrap">
@@ -488,7 +579,7 @@ const Home = () => {
             ].map((el, i) => (
               <a
                 key={i}
-                className="mb-2 mr-2 flex w-fit items-center space-x-2.5 rounded-full border border-zinc-900 px-3 py-2 transition-all hover:border-zinc-800 hover:bg-zinc-900 active:bg-zinc-800"
+                className="mb-2 mr-2 flex w-fit items-center space-x-2.5 rounded-full border border-zinc-900 px-3.5 py-2 transition-all hover:border-zinc-800 hover:bg-zinc-900 active:bg-zinc-800"
                 href={el.link}
                 target="_blank"
                 rel="noopener noreferrer"
