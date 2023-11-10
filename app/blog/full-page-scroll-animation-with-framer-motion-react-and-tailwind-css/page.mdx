@@ -24,7 +24,7 @@ export const metadata = {
 
 In this post, I'll explain how I built the scroll-based animation for Bolt.Earth's landing page. You can see it in action [here](https://bolt.earth).
 
-<video src="/blog-media/1/full-preview.mp4" autoPlay loop muted playsInline />
+{/* <video src="/blog-media/1/full-preview.mp4" autoPlay loop muted playsInline /> */}
 
 When I first saw what the design team had come up with, I felt a bit intimidated, having never worked on anything like it before. But I always like a good challenge, so I started researching. Although I did find some resources that helped me get started, I couldn't find a complete example that I could use as a reference. So I decided to write this article to help others who might be trying to build something similar. I hope you find it useful!
 
@@ -36,7 +36,7 @@ The layout is pretty simple. It consists of:
 - 5 divs with an `absolute` position and a height of `100vh`. These will help with scroll snapping and don't need to be visible or interactive, so we'll set `pointer-events` to `none`.
 - A div with `sticky` position and a height of `100vh`. This is where the animation happens.
 
-<video src="/blog-media/1/layout.mp4" autoPlay loop muted playsInline />
+{/* <video src="/blog-media/1/layout.mp4" autoPlay loop muted playsInline /> */}
 
 To accomodate for the sticky header that has a height of `80px`, we'll offset the `top` position of all containers by `80px`, and subtract `80px` from their heights. Here's what the code looks like:
 
@@ -102,7 +102,7 @@ export function cn(...inputs) {
 
 ### Maintaining the aspect ratio of the animation container
 
-<video src="/blog-media/1/aspect-ratio.mp4" autoPlay loop muted playsInline />
+{/* <video src="/blog-media/1/aspect-ratio.mp4" autoPlay loop muted playsInline /> */}
 
 Since the main content of the animation container is an image, we want to maintain its aspect ratio. We also want it to take up as much space as possible without overflowing the viewport, and we want it to be centered both vertically and horizontally. This can't be achieved with CSS alone, so we'll have to do it manually using JavaScript:
 
@@ -293,13 +293,13 @@ The image is wrapped in a `motion.div` element that is absolutely positioned. We
 
 Here's what the output looks like:
 
-<video
+{/* <video
   src="/blog-media/1/main-image-animation.mp4"
   autoPlay
   loop
   muted
   playsInline
-/>
+/> */}
 
 ### Skipping the animation when the user scrolls too fast
 
