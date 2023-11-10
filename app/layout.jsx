@@ -68,11 +68,11 @@ export default function RootLayout({ children }) {
         </header>
         <main>{children}</main>
         <footer className="bg-black text-sm">
-          <div className="container flex flex-col items-center justify-center py-6 text-center text-gray-400 md:flex-row">
+          <div className="container flex flex-col items-center justify-center py-6 text-center text-slate-400 md:flex-row">
             <span>Designed and coded by Pratik</span>
             <span className="mx-2 opacity-60">•</span>
             <a
-              className="flex items-center space-x-1.5 transition-all hover:text-gray-300 hover:underline"
+              className="flex items-center space-x-1.5 transition-all hover:text-slate-300 hover:underline"
               href="https://github.com/pratv1/pratv1.github.io"
               target="_blank"
             >

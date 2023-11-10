@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  color-scheme: dark;
+}
+
 * {
   letter-spacing: -0.03em;
 }
@@ -10,7 +14,40 @@ html {
   scroll-behavior: smooth;
 }
 
+:target {
+  scroll-margin-top: 80px;
+}
+
 ::selection {
-  background-color: #1f2937;
-  color: #fff;
+  background-color: rgba(97, 97, 97, 0.31);
+  color: inherit;
+}
+
+code {
+  counter-reset: line;
+}
+
+code > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 1em;
+  margin-right: 1em;
+  text-align: right;
+  color: #424242;
+}
+
+code[data-line-numbers-max-digits="2"] > [data-line]::before {
+  width: 2em;
+}
+
+code[data-line-numbers-max-digits="3"] > [data-line]::before {
+  width: 3em;
+}
+
+:not(pre) > code {
+  padding: 0.12em 0.25em;
+  border-radius: 0.375em;
+  font-size: 0.875em !important;
+  @apply border border-zinc-700 bg-zinc-800 !font-normal;
 }

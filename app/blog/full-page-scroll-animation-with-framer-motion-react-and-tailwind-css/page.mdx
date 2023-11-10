@@ -1,0 +1,343 @@
+import { Info, User } from "lucide-react";
+import Link from "next/link";
+
+export const metadata = {
+  title:
+    "Full-page scroll animation with Framer Motion, React, and Tailwind CSS | Pratik V",
+  description:
+    "How to build a scroll-based animation with Framer Motion, React, and Tailwind CSS",
+};
+
+# Full-page scroll animation with Framer Motion, React, and Tailwind CSS
+
+<div className="mb-10 flex items-stretch text-sm text-slate-400">
+  <Link
+    href="/"
+    className="flex items-center space-x-2 font-semibold no-underline hover:underline"
+  >
+    <User size={16} />
+    <span>Pratik V</span>
+  </Link>
+  <span className="mx-2">/</span>
+  <span>Nov 11, 2023</span>
+</div>
+
+In this post, I'll explain how I built the scroll-based animation for Bolt.Earth's landing page. You can see it in action [here](https://bolt.earth).
+
+<video src="/blog-media/1/full-preview.mp4" autoPlay loop muted playsInline />
+
+When I first saw what the design team had come up with, I felt a bit intimidated, having never worked on anything like it before. But I always like a good challenge, so I started researching. Although I did find some resources that helped me get started, I couldn't find a complete example that I could use as a reference. So I decided to write this article to help others who might be trying to build something similar. I hope you find it useful!
+
+## The Layout
+
+The layout is pretty simple. It consists of:
+
+- A parent container with a `relative` position and a height of `500vh` (5 times the viewport height to fit 5 full height slides).
+- 5 divs with an `absolute` position and a height of `100vh`. These will help with scroll snapping and don't need to be visible or interactive, so we'll set `pointer-events` to `none`.
+- A div with `sticky` position and a height of `100vh`. This is where the animation happens.
+
+<video src="/blog-media/1/layout.mp4" autoPlay loop muted playsInline />
+
+To accomodate for the sticky header that has a height of `80px`, we'll offset the `top` position of all containers by `80px`, and subtract `80px` from their heights. Here's what the code looks like:
+
+```jsx
+const HeroSection = () => {
+  return (
+    <section
+      id="parent-container"
+      className="relative h-[calc(5*(100vh-80px))]"
+    >
+      {/* Scroll snap helpers */}
+      {Array(5)
+        .fill()
+        .map((_, i) => (
+          <div
+            key={i}
+            className={cn(
+              "pointer-events-none absolute left-0 h-[calc(100vh-80px)] w-full snap-start scroll-mt-[80px]",
+              i === 0 && "top-0",
+              i === 1 && "top-[calc(100vh-80px)]",
+              i === 2 && "top-[calc(2*(100vh-80px))]",
+              i === 3 && "top-[calc(3*(100vh-80px))]",
+              i === 4 && "top-[calc(4*(100vh-80px))]",
+            )}
+          ></div>
+        ))}
+
+      {/* Animation container */}
+      <div
+        id="animation-container"
+        className="sticky top-0 h-[calc(100vh-80px)] overflow-hidden"
+      >
+        {/* Animation goes here */}
+      </div>
+    </section>
+  );
+};
+```
+
+You might've noticed the `cn` function I'm using to conditionally apply and merge classes. It's a handy utility that I picked up from [shadcn/ui](https://ui.shadcn.com), which uses `clsx` and `tailwind-merge` under the hood. Here's the code for it:
+
+```js
+import clsx from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs) {
+  return twMerge(clsx(inputs));
+}
+```
+
+<div className="flex space-x-3 rounded-md border border-blue-950 bg-blue-950/60 px-4">
+  <div className="mt-5 shrink-0 lg:mt-6">
+    <Info className="h-5 w-5 text-blue-300 lg:h-6 lg:w-6" />
+  </div>
+  <div className="pb-1 lg:pb-2">
+    #### Why use `sticky` instead of `fixed` for the animation container?
+    Because we want the user to be able to scroll past the animation and see the
+    rest of the page. A `sticky` element will only stick to the top the viewport
+    until it reaches the end of its parent container, at which point it will
+    behave like a `relative` element.
+  </div>
+</div>
+
+### Maintaining the aspect ratio of the animation container
+
+<video src="/blog-media/1/aspect-ratio.mp4" autoPlay loop muted playsInline />
+
+Since the main content of the animation container is an image, we want to maintain its aspect ratio. We also want it to take up as much space as possible without overflowing the viewport, and we want it to be centered both vertically and horizontally. This can't be achieved with CSS alone, so we'll have to do it manually using JavaScript:
+
+```jsx
+const HeroSection = () => {
+  const layersContainerRef = useRef(null);
+
+  useEffect(() => {
+    if (!layersContainerRef.current) return;
+
+    function handleResize() {
+      const aspectRatio = 1236 / 891; // ~1.387
+      const layersContainer = layersContainerRef.current;
+
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight - 80; // Considering the header height
+
+      const heightBasedWidth = Math.floor(viewportWidth / aspectRatio);
+      const widthBasedHeight = Math.floor(viewportHeight * aspectRatio);
+
+      const newWidth =
+        heightBasedWidth > viewportHeight ? widthBasedHeight : viewportWidth;
+      const newHeight =
+        heightBasedWidth > viewportHeight ? viewportHeight : heightBasedWidth;
+
+      if (
+        newWidth !== layersContainer.offsetWidth ||
+        newHeight !== layersContainer.offsetHeight
+      ) {
+        layersContainer.style.width = `${newWidth}px`;
+        layersContainer.style.height = `${newHeight}px`;
+      }
+    }
+    handleResize(); // Call the function once on mount
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup on unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [layersContainerRef]);
+
+  return (
+    <section
+      id="parent-container"
+      className="relative h-[calc(5*(100vh-80px))]"
+    >
+      {/* ... */}
+      <div
+        id="animation-container"
+        className="sticky top-0 h-[calc(100vh-80px)] overflow-hidden"
+      >
+        {/* Animation goes here */}
+      </div>
+    </section>
+  );
+};
+```
+
+### Scroll Snapping
+
+We'll use the `scroll-snap-type` CSS property to enable scroll snapping. We'll also set the `scroll-padding-top` to `80px` to accomodate for the sticky header.
+
+We only want scroll snapping enabled until the user reaches the end of the parent container. To achieve this, we can put these styles in a class and toggle it on and off based on the scroll progress.
+
+```css
+.scroll-snap-enabled {
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: 80px;
+  scroll-snap-stop: always;
+}
+```
+
+This is the function we'll use to toggle the above class on and off. We'll add the class to both the `html` and `body` elements, just to be safe.
+
+```js
+function toggleScrollSnap(on) {
+  const htmlElement = document.querySelector("html");
+  const bodyElement = document.querySelector("body");
+  const className = "scroll-snap-enabled";
+
+  [htmlElement, bodyElement].forEach((el) => {
+    if (on) el.classList.add(className);
+    else el.classList.remove(className);
+  });
+}
+```
+
+I'll explain where we'll call this function in the next section.
+
+## The Animation
+
+We'll be using [Framer Motion](https://www.framer.com/motion/) to build the animation. It's a great library that makes it easy to create complex animations.
+
+There were a lot of ways to approach this, and after a lot of trial and error, I decided to go with the following approach:
+
+- We'll use the `useScroll` hook from Framer Motion to get `scrollYProgress`, which is a value between `0` and `1` that represents the scroll progress of the page or a target element (in our case, the parent container). We'll listen to changes to this value using `useMotionValueEvent`.
+- We want to trigger the animation as soon as the user starts scrolling. To achieve this, we'll need to know the scroll direction. We can get it by comparing the current `scrollYProgress` value with the previous one that we'll store in a `useRef` hook. Once we have the scroll direction, we can use it to determine which slide index the user is going to next.
+- For all the elements that we want to animate, we'll create motion [variants](https://www.framer.com/motion/introduction/##variants) for each slide index, and use the `activeIndex` state to determine which variant to animate to.
+
+```jsx
+import { useRef, useState, useEffect } from "react";
+import { useMotionValueEvent, useScroll } from "framer-motion";
+
+const HeroSection = () => {
+  const parentContainerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: parentContainerRef,
+    offset: ["-80px start", "end end"], // Considering the sticky header
+  });
+  const previousScrollYProgress = useRef(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useMotionValueEvent(scrollYProgress, "change", (progress) => {
+    const steps = [0, 0.25, 0.5, 0.75, 1]; // The scroll progress at which each of the 5 slides start/end
+    const offset = 0.01; // A small offset to prevent the activeIndex from changing too early
+    const scrollDirection =
+      progress > previousScrollYProgress.current ? "down" : "up";
+
+    let index;
+
+    if (scrollDirection === "down") {
+      if (progress > steps[3] + offset) index = 4;
+      else if (progress > steps[2] + offset) index = 3;
+      else if (progress > steps[1] + offset) index = 2;
+      else if (progress > steps[0] + offset) index = 1;
+      else index = 0;
+    } else {
+      if (progress < steps[1] - offset) index = 0;
+      else if (progress < steps[2] - offset) index = 1;
+      else if (progress < steps[3] - offset) index = 2;
+      else if (progress < steps[4] - offset) index = 3;
+      else index = 4;
+    }
+
+    if (activeIndex !== index) setActiveIndex(index);
+
+    toggleScrollSnap(progress !== 1);
+
+    previousScrollYProgress.current = progress;
+  });
+
+  useEffect(() => {
+    toggleScrollSnap(true);
+    return () => toggleScrollSnap(false);
+  }, []);
+
+  return (
+    <section
+      ref={parentContainerRef}
+      id="parent-container"
+      className="relative h-[calc(5*(100vh-80px))]"
+    >
+      {/* ... */}
+    </section>
+  );
+};
+```
+
+In the code above, we've called the `toggleScrollSnap` function in two places:
+
+1. In the `useEffect` hook to enable scroll snapping when the component mounts, and disable it when it unmounts.
+2. In the `useMotionValueEvent` hook to disable scroll snapping when the user reaches the end of the parent container.
+
+### Animating with variants
+
+I won't go into too much detail about every part of the animation, but I'll explain how the main image is being animated. Here's the code:
+
+```jsx
+<motion.div
+  className="pointer-events-none absolute left-1/2 top-1/2"
+  variants={{
+    0: { x: "-50%", y: "-50%", scale: 1 },
+    1: { x: "-50%", y: "-90%", scale: 2 },
+    2: { x: "35%", y: "-45%", scale: 2 },
+    3: { x: "-50%", y: "16%", scale: 2 },
+    4: { x: "-130%", y: "-45%", scale: 2 },
+  }}
+  initial="0" // The initial variant on mount
+  animate={String(activeIndex)}
+  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+>
+  {/* image here */}
+</motion.div>
+```
+
+The image is wrapped in a `motion.div` element that is absolutely positioned. We're using the `variants` prop to define the position and scale of the element for each slide index, and the `animate` prop to animate the element to the variant corresponding to the `activeIndex` state. We're converting the `activeIndex` state to a string because the `animate` prop only accepts a string as a variant.
+
+Here's what the output looks like:
+
+<video
+  src="/blog-media/1/main-image-animation.mp4"
+  autoPlay
+  loop
+  muted
+  playsInline
+/>
+
+### Skipping the animation when the user scrolls too fast
+
+We want to end the animation transition immediately if the user scrolls to the next slide before the transition has finished. To do this, we can use [`useAnimationControls`](https://www.framer.com/motion/use-animation-controls), like so:
+
+```jsx
+const controls = useAnimationControls();
+const isAnimating = useRef(false);
+
+useEffect(() => {
+  if (isAnimating.current) {
+    controls.stop();
+    controls.set(String(activeIndex));
+  } else {
+    controls.start(String(activeIndex));
+    isAnimating.current = true;
+    setTimeout(() => {
+      isAnimating.current = false;
+    }, 600); // The duration of the transition
+  }
+}, [activeIndex]);
+```
+
+We'll pass the `controls` object to the `animate` prop instead of the `activeIndex` state.
+
+```jsx
+<motion.div
+  // ...
+  animate={controls}
+>
+  {/* ... */}
+</motion.div>
+```
+
+This will ensure that the animation doesn't stutter when the user scrolls too fast.
+
+## Conclusion
+
+Aaand that's about it! I hope this article helped you understand the basics of how to build a scroll-based animation.
+
+If you have any questions or feedback, feel free to reach out to me on [X](https://twitter.com/pratvar).

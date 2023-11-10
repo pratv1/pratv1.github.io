@@ -75,9 +75,9 @@ const Home = () => {
             <p>
               I'm a{" "}
               <b className="font-medium text-white">front-end developer</b>{" "}
-              based in <b className="font-medium text-white">Bengaluru</b>, and
-              I'm passionate about building beautiful and intuitive user
-              experiences. I'm currently working at{" "}
+              based in <b className="font-medium text-white">Bengaluru</b> and I
+              love building beautiful and intuitive user experiences. I'm
+              currently working at{" "}
               <a
                 href="https://bolt.earth/"
                 target="_blank"
@@ -140,8 +140,8 @@ const Home = () => {
                 line: "from-purple-400 from-60% to-indigo-400",
               },
               timePeriod: "Apr 2015 – Apr 2019",
-              title: "Alwar Public School, Rajasthan",
-              subtitle: "Secondary school (CBSE India)",
+              title: "Secondary School (CBSE India)",
+              // subtitle: "CBSE India",
               content: (
                 <p>
                   I was first introduced to HTML in 2016 when I was in 10th
@@ -305,12 +305,16 @@ const Home = () => {
                 >
                   {el.timePeriod}
                 </div>
-                <div className="mb-6 flex flex-col space-y-1 lg:flex-row lg:items-stretch lg:space-x-2 lg:space-y-0 lg:text-lg">
+                <div className="mb-5 flex flex-col space-y-1 lg:flex-row lg:items-stretch lg:space-x-2 lg:space-y-0 lg:text-lg">
                   <b className="font-bold">{el.title}</b>
-                  <span className="hidden border-l border-slate-600 lg:inline-block" />
-                  <span className="text-slate-300">{el.subtitle}</span>
+                  {el.subtitle && (
+                    <>
+                      <span className="hidden border-l border-slate-600 lg:inline-block" />
+                      <span className="text-slate-300">{el.subtitle}</span>
+                    </>
+                  )}
                 </div>
-                <div className="text-sm !leading-[1.8em] text-white">
+                <div className="text-sm !leading-[1.8em] text-white lg:text-base">
                   {el.content}
                 </div>
               </div>
@@ -361,26 +365,33 @@ const Home = () => {
               category: "Frameworks & Libraries",
               items: {
                 proficient: ["React", "Tailwind CSS", "MUI"],
-                experienced: ["Next.js", "Google Maps API"],
+                experienced: ["Next.js", "Google Maps API", "Strapi"],
                 familiar: ["Vue", "Laravel", "Socket.IO"],
               },
             },
             {
               category: "Tools & Platforms",
               items: {
-                proficient: [
-                  "Amazon Web Services: S3, CloudFront, Route 53, EC2",
-                  "VS Code",
+                proficient: ["VS Code"],
+                experienced: [
+                  "AWS: S3, CloudFront, Route 53, EC2",
+                  "Git",
+                  "Linux",
+                  "Cloudflare",
+                  "Figma",
                 ],
-                experienced: ["Git", "Linux", "Cloudflare", "Figma"],
                 familiar: ["Firebase", "Adobe XD", "Jenkins"],
               },
             },
             {
               category: "Other",
               items: {
-                proficient: ["Responsive Web Design", "SEO"],
-                experienced: ["Progressive Web Apps", "Web Accessibility"],
+                proficient: ["Responsive Web Design"],
+                experienced: [
+                  "SEO",
+                  "Progressive Web Apps",
+                  "Web Accessibility",
+                ],
                 familiar: [],
               },
             },

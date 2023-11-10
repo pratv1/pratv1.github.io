@@ -39,7 +39,7 @@ const Page = () => {
           ].join(", "),
         }}
       >
-        <div className="container py-14 lg:py-16">
+        <div className="container py-9 lg:py-16">
           <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:gap-8">
             {[
               {
