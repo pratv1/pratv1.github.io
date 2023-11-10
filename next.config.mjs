@@ -5,7 +5,7 @@ import rehypeSlug from "rehype-slug";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  pageExtensions: ["js", "jsx", "mdx"],
+  // pageExtensions: ["js", "jsx", "mdx"],
   output: "export",
 };
 
