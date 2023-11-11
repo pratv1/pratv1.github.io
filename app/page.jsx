@@ -255,8 +255,8 @@ const Home = () => {
                           className="text-blue-300 transition-all hover:underline"
                         >
                           website
-                        </a>{" "}
-                        and{" "}
+                        </a>
+                        ,{" "}
                         <a
                           href="https://console.bolt.earth/"
                           target="_blank"
@@ -265,9 +265,8 @@ const Home = () => {
                         >
                           web app
                         </a>
-                        .
+                        , and HTML email templates for marketing campaigns.
                       </>,
-                      "Building HTML email templates for marketing campaigns.",
                       "Working with the design and backend teams to plan and implement new features.",
                       "Reviewing code and providing feedback to other developers.",
                     ].map((el, i) => (

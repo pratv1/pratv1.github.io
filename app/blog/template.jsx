@@ -62,10 +62,10 @@ const BlogPostTemplate = ({ children }) => {
           <ArrowLeft size={16} />
           <span className="text-sm">Back to blog</span>
         </Link>
-        <div className="relative grid lg:grid-cols-[1fr_300px]">
+        <div className="relative flex">
           <div
             className={cn(
-              "prose prose-sm prose-slate prose-invert max-w-full border-zinc-900 lg:prose-base lg:border-r lg:pr-6",
+              "prose prose-sm prose-slate prose-invert min-w-0 max-w-none border-zinc-900 lg:prose-base lg:border-r lg:pr-6",
               "prose-pre:border prose-pre:border-zinc-800 prose-pre:bg-zinc-900 prose-pre:text-base",
               "prose-code:!leading-[1.4em] prose-code:before:content-none prose-code:after:content-none",
               "prose-video:mx-auto prose-video:w-full prose-video:max-w-3xl prose-video:overflow-hidden prose-video:rounded-md",
@@ -73,7 +73,7 @@ const BlogPostTemplate = ({ children }) => {
           >
             {children}
           </div>
-          <div className="sticky top-[calc(59px+28px)] hidden w-80 shrink-0 self-start px-6 lg:block">
+          <div className="sticky top-[calc(59px+28px)] hidden shrink-0 basis-80 self-start px-6 lg:block">
             <div className="font-bold">In this article</div>
             <div className="mt-6 space-y-3 text-sm">
               {headings.map((heading, i) => (
