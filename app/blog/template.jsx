@@ -10,6 +10,11 @@ import { cn } from "@/utils";
 export default function Template({ children }) {
   const pathname = usePathname();
 
+  if (pathname === "/blog") return <div>{children}</div>;
+  return <BlogPostTemplate>{children}</BlogPostTemplate>;
+}
+
+const BlogPostTemplate = ({ children }) => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref });
   const [hideScrollProgress, setHideScrollProgress] = useState(false);
@@ -33,7 +38,6 @@ export default function Template({ children }) {
     );
   }, [ref]);
 
-  if (pathname === "/blog") return <div>{children}</div>;
   return (
     <section
       ref={ref}
@@ -58,7 +62,7 @@ export default function Template({ children }) {
           <ArrowLeft size={16} />
           <span className="text-sm">Back to blog</span>
         </Link>
-        <div className="relative flex">
+        <div className="relative grid lg:grid-cols-[1fr_300px]">
           <div
             className={cn(
               "prose prose-sm prose-slate prose-invert max-w-full border-zinc-900 lg:prose-base lg:border-r lg:pr-6",
@@ -90,4 +94,4 @@ export default function Template({ children }) {
       </div>
     </section>
   );
-}
+};

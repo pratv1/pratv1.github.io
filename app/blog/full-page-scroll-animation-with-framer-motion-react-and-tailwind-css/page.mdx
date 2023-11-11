@@ -1,5 +1,6 @@
 import { Info, User } from "lucide-react";
 import Link from "next/link";
+import SocialLinks from "@/components/SocialLinks";
 
 export const metadata = {
   title:
@@ -33,7 +34,7 @@ When I first saw what the design team had come up with, I felt a bit intimidated
 The layout is pretty simple. It consists of:
 
 - A parent container with a `relative` position and a height of `500vh` (5 times the viewport height to fit 5 full height slides).
-- 5 divs with an `absolute` position and a height of `100vh`. These will help with scroll snapping and don't need to be visible or interactive, so we'll set `pointer-events` to `none`.
+- 5 divs with an `absolute` position and a height of `100vh`. These will help with scroll snapping, and are not visible to the user.
 - A div with `sticky` position and a height of `100vh`. This is where the animation happens.
 
 <video src="/blog-media/1/layout.mp4" autoPlay loop muted playsInline />
@@ -45,7 +46,7 @@ const HeroSection = () => {
   return (
     <section
       id="parent-container"
-      className="relative h-[calc(5*(100vh-80px))]"
+      className="relative h-[calc(5*(100vh-80px))] w-full"
     >
       {/* Scroll snap helpers */}
       {Array(5)
@@ -61,13 +62,13 @@ const HeroSection = () => {
               i === 3 && "top-[calc(3*(100vh-80px))]",
               i === 4 && "top-[calc(4*(100vh-80px))]",
             )}
-          ></div>
+          />
         ))}
 
       {/* Animation container */}
       <div
         id="animation-container"
-        className="sticky top-0 h-[calc(100vh-80px)] overflow-hidden"
+        className="sticky top-0 h-[calc(100vh-80px)] w-full overflow-hidden"
       >
         {/* Animation goes here */}
       </div>
@@ -100,11 +101,40 @@ export function cn(...inputs) {
   </div>
 </div>
 
-### Maintaining the aspect ratio of the animation container
+### Scroll Snapping
+
+We'll use CSS's scroll snap feature to enable scroll snapping. We only want it enabled until the user reaches the end of the parent container. To achieve this, we can put these styles in a class and toggle it on and off based on the scroll progress.
+
+```css
+.scroll-snap-enabled {
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: 80px; /* Considering the sticky header */
+  scroll-snap-stop: always;
+}
+```
+
+This is the function we'll use to toggle the above class on and off. We'll add the class to both the `html` and `body` elements, just to be safe. I'll explain where we'll call this function later.
+
+```js
+function toggleScrollSnap(on) {
+  const htmlElement = document.querySelector("html");
+  const bodyElement = document.querySelector("body");
+  const className = "scroll-snap-enabled";
+
+  [htmlElement, bodyElement].forEach((el) => {
+    if (on) el.classList.add(className);
+    else el.classList.remove(className);
+  });
+}
+```
+
+### Maintaining the aspect ratio of the image container
+
+Since the main content of the animation container is an image, we want to maintain its aspect ratio.
 
 <video src="/blog-media/1/aspect-ratio.mp4" autoPlay loop muted playsInline />
 
-Since the main content of the animation container is an image, we want to maintain its aspect ratio. We also want it to take up as much space as possible without overflowing the viewport, and we want it to be centered both vertically and horizontally. This can't be achieved with CSS alone, so we'll have to do it manually using JavaScript:
+This image container actually holds a bunch of layers that are absolutely positioned. We also want it to take up as much space as possible without overflowing the viewport, and we want it to be centered both vertically and horizontally. This can't be achieved with CSS alone, so we'll have to do it manually using JavaScript:
 
 ```jsx
 const HeroSection = () => {
@@ -136,7 +166,7 @@ const HeroSection = () => {
         layersContainer.style.height = `${newHeight}px`;
       }
     }
-    handleResize(); // Call the function once on mount
+    handleResize(); // Run once on mount
     window.addEventListener("resize", handleResize);
 
     // Cleanup on unmount
@@ -146,50 +176,25 @@ const HeroSection = () => {
   }, [layersContainerRef]);
 
   return (
-    <section>
+    <section id="parent-container" {/* ... */}>
       {/* ... */}
-      <div
-        ref={layersContainerRef}
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-      >
-        {/* ... */}
+      <div id="animation-container" {/* ... */}>
+        {/* Image container */}
+        <div
+          ref={layersContainerRef}
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        >
+          {/* ... */}
+        </div>
       </div>
-      {/* ... */}
     </section>
   );
 };
 ```
 
-### Scroll Snapping
+The code above will listen to the `resize` event and update the width and height of the image container accordingly.
 
-We'll use the `scroll-snap-type` CSS property to enable scroll snapping. We'll also set the `scroll-padding-top` to `80px` to accomodate for the sticky header.
-
-We only want scroll snapping enabled until the user reaches the end of the parent container. To achieve this, we can put these styles in a class and toggle it on and off based on the scroll progress.
-
-```css
-.scroll-snap-enabled {
-  scroll-snap-type: y mandatory;
-  scroll-padding-top: 80px;
-  scroll-snap-stop: always;
-}
-```
-
-This is the function we'll use to toggle the above class on and off. We'll add the class to both the `html` and `body` elements, just to be safe.
-
-```js
-function toggleScrollSnap(on) {
-  const htmlElement = document.querySelector("html");
-  const bodyElement = document.querySelector("body");
-  const className = "scroll-snap-enabled";
-
-  [htmlElement, bodyElement].forEach((el) => {
-    if (on) el.classList.add(className);
-    else el.classList.remove(className);
-  });
-}
-```
-
-I'll explain where we'll call this function in the next section.
+To center the container both vertically and horizontally, we've added tailwind classes to set the `top` and `left` positions to `50%`, and translate the container by `-50%` in both directions.
 
 ## The Animation
 
@@ -252,7 +257,7 @@ const HeroSection = () => {
     <section
       ref={parentContainerRef}
       id="parent-container"
-      className="relative h-[calc(5*(100vh-80px))]"
+      // ...
     >
       {/* ... */}
     </section>
@@ -271,6 +276,7 @@ I won't go into too much detail about every part of the animation, but I'll expl
 
 ```jsx
 <motion.div
+  ref={layerscontainer}
   className="pointer-events-none absolute left-1/2 top-1/2"
   variants={{
     0: { x: "-50%", y: "-50%", scale: 1 },
@@ -280,14 +286,14 @@ I won't go into too much detail about every part of the animation, but I'll expl
     4: { x: "-130%", y: "-45%", scale: 2 },
   }}
   initial="0" // The initial variant on mount
-  animate={String(activeIndex)}
+  animate={String(activeIndex)} // The variant to animate to
   transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
 >
   {/* image here */}
 </motion.div>
 ```
 
-The image is wrapped in a `motion.div` element that is absolutely positioned. We're using the `variants` prop to define the position and scale of the element for each slide index, and the `animate` prop to animate the element to the variant corresponding to the `activeIndex` state. We're converting the `activeIndex` state to a string because the `animate` prop only accepts a string as a variant.
+We've converted the image container from earlier into a `motion.div` element so that we can animate it. We're using the `variants` prop to define the position and scale of the element for each slide index, and the `animate` prop to animate the element to the variant corresponding to the `activeIndex` state.
 
 Here's what the output looks like:
 
@@ -336,6 +342,6 @@ This will ensure that the animation doesn't stutter when the user scrolls too fa
 
 ## Conclusion
 
-Aaand that's about it! I hope this article helped you understand the basics of how to build a scroll-based animation.
+That's it! I hope this article helped you understand the basics of how to build a scroll-based animation. If you have any questions or feedback, feel free to reach out to me through any of the following channels:
 
-If you have any questions or feedback, feel free to reach out to me on [X](https://twitter.com/pratvar).
+<SocialLinks />
