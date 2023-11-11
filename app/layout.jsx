@@ -19,6 +19,10 @@ export const metadata = {
   description: "I am a front-end developer based in India.",
 };
 
+export const viewport = {
+  colorScheme: "dark",
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
