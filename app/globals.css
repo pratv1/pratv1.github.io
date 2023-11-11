@@ -2,12 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
+html {
+  scroll-behavior: smooth;
+}
+
+body {
   letter-spacing: -0.03em;
 }
 
-html {
-  scroll-behavior: smooth;
+pre,
+code {
+  letter-spacing: normal;
+  line-height: 1.4em !important;
 }
 
 :target {

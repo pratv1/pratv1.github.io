@@ -66,8 +66,8 @@ const BlogPostTemplate = ({ children }) => {
           <div
             className={cn(
               "prose prose-sm prose-slate prose-invert min-w-0 max-w-none border-zinc-900 lg:prose-base lg:border-r lg:pr-6",
-              "prose-pre:border prose-pre:border-zinc-800 prose-pre:bg-zinc-900 prose-pre:text-base",
-              "prose-code:!leading-[1.4em] prose-code:before:content-none prose-code:after:content-none",
+              "prose-pre:border prose-pre:border-zinc-900 prose-pre:bg-zinc-900/50",
+              "prose-code:before:content-none prose-code:after:content-none",
               "prose-video:mx-auto prose-video:w-full prose-video:max-w-3xl prose-video:overflow-hidden prose-video:rounded-md",
             )}
           >
