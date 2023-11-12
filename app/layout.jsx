@@ -17,6 +17,7 @@ const firaCode = Fira_Code({
 export const metadata = {
   title: "Pratik V | Front-end Developer",
   description: "I am a front-end developer based in India.",
+  metadataBase: new URL("https://pratv1.github.io"),
 };
 
 export const viewport = {
