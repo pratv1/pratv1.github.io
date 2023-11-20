@@ -1,11 +1,5 @@
 import Link from "next/link";
 
-export const metadata = {
-  title: "Blog | Pratik V",
-  description:
-    "I write about front-end development and other things that interest me.",
-};
-
 const Page = () => {
   return (
     <>
@@ -20,7 +14,7 @@ const Page = () => {
         <div className="container py-14 text-center lg:py-20">
           <h1 className="text-4xl font-extrabold sm:text-5xl">
             <span className="bg-gradient-to-r from-blue-200 to-blue-400 bg-clip-text text-transparent">
-              Blog
+              Pratik's Blog
             </span>
           </h1>
           <p className="mt-6 text-sm text-slate-300 lg:mt-12 lg:text-base">

@@ -18,6 +18,9 @@ export const metadata = {
   title: "Pratik V | Front-end Developer",
   description: "I am a front-end developer based in India.",
   metadataBase: new URL("https://pratv1.github.io"),
+  verification: {
+    google: "pMTfyz5MQ6hLMGN_lXy0D7SRX9ObeGlQIYG_11_9brY",
+  },
 };
 
 export const viewport = {
@@ -32,7 +35,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${inter.variable} ${firaCode.variable} bg-zinc-950 font-sans text-white`}
       >
-        <header className="sticky top-0 z-50 bg-zinc-950/50 backdrop-blur-md">
+        <header className="sticky top-0 z-50 border-b border-zinc-900 bg-zinc-950/50 backdrop-blur-md">
           <div className="container flex items-center justify-between py-3">
             <Link
               href="/"
@@ -70,7 +73,6 @@ export default function RootLayout({ children }) {
               </Link>
             </div>
           </div>
-          <hr className="border-zinc-900" />
         </header>
         <main>{children}</main>
         <footer className="bg-black text-sm">

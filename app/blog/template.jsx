@@ -50,7 +50,7 @@ const BlogPostTemplate = ({ children }) => {
     >
       <motion.div
         id="progress-bar"
-        className="fixed left-0 right-0 top-[58px] z-10 h-0.5 origin-left bg-gradient-to-r from-blue-600 to-blue-400"
+        className="fixed left-0 right-0 top-[59px] z-10 h-0.5 origin-left bg-gradient-to-r from-blue-600 to-blue-400"
         style={{ scaleX: scrollYProgress }}
         animate={{ opacity: hideScrollProgress ? 0 : 1 }}
       />
